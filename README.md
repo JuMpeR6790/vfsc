@@ -1,5 +1,5 @@
 # VFSC
-VFSC (very fancy socket communicator) is a very simple python api to create simple chat clients (text only). 
+VFSC (very fancy socket communicator) is a very simple (but fancy) python api to create simple chat clients (text only). 
 
 # How to use it?
 
