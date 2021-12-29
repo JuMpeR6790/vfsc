@@ -1,14 +1,10 @@
-import socket 
+import vfsc
 
-HOST = "192.168.1.95"
-PORT = 17564
-
-def start_client():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((HOST, PORT))
-    print("Connected to server!")
+def simple_client():
+    v = vfsc()
+    v.connect_to("192.168.1.95", 17224)
     while True:
-        text = input("chat:")
-        s.sendall(bytes(text, encoding="utf-8"))
+        message = input("chat: ")
+        v.send(message)
 
-start_client()
+simple_client()
