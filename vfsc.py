@@ -11,4 +11,4 @@ class vfsc():
         self.s.sendall(bytes(message, encoding="utf-8"))
 
     def listen(self):
-        self.s.recv(1024).decode("utf-8")
+        return self.s.recv(1024).decode("utf-8")
