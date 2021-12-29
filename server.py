@@ -16,7 +16,10 @@ list_of_conn = []
 main_loop = True
 print("Starting [...]")
 
+    
+
 def start_server():
+    global number_connections
     number_connections = 0
     s.bind((SERVER_IP, PORT))
     print("Server up!")
@@ -44,7 +47,7 @@ def connections(conn,addr):
         message = conn.recv(1024).decode("utf-8")
         if message == "":
             s.close
-            list_of_conn.remove(conn)
+            number_connections = number_connections - 1
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         message_with_info = f"{addr} {current_time} : {message}"
@@ -77,9 +80,5 @@ def echo_messages(message):
 def disconnect():
     for i in list_of_conn:
         i.close()
-        list_of_conn.remove(i)
-        
-start_server()
-        
 
 start_server()
