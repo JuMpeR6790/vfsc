@@ -12,10 +12,9 @@ PORT = int(format(info["port"]))
 SERVER_IP = str(format(info["ipaddr"]))
 LOGS = str(format(info["logs"]))
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-list_of_addr = []
+list_of_conn = []
+main_loop = True
 print("Starting [...]")
-
-
 
 def start_server():
     number_connections = 0
@@ -27,7 +26,7 @@ def start_server():
     commandThread = threading.Thread(target=commands)
     commandThread.start()
     s.listen(1)
-    while True:
+    while main_loop:
         conn,addr = s.accept()
         clients = threading.Thread(target=connections, args=(conn,addr))
         clients.start()
@@ -36,16 +35,16 @@ def start_server():
             print(number_connections, "client connected")
         else:
             print(number_connections, "clients connected")
+
         
-
-
-
 def connections(conn,addr):
-    list_of_addr.append(addr)
+    list_of_conn.append(conn)
     print("Connected to ", addr)
-    connected = True
-    while connected:
+    while main_loop:
         message = conn.recv(1024).decode("utf-8")
+        if message == "":
+            s.close
+            list_of_conn.remove(conn)
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         message_with_info = f"{addr} {current_time} : {message}"
@@ -56,24 +55,31 @@ def connections(conn,addr):
             log.write("\n")
             log.writelines(message_with_info)
        
-
-
 def commands():
     while True:
         command = input()
         if command == "stop":
             print("Stopping [...]")
-            s.close
+            disconnect()
+            main_loop = False
             sys.exit
             print("You can safely control + c to terminate the server")
             break
+        elif command == "list":
+            print(list_of_conn)
         else:
             print("Unknown command")
-           
+        
+def echo_messages(message):
+    for i in list_of_conn:
+        i.sendall(bytes(message, encoding="utf-8"))
 
-def echo_messages(data):
-    for i in list_of_addr:
-        i.sendall(bytes(data, encoding="utf-8"))
+def disconnect():
+    for i in list_of_conn:
+        i.close()
+        list_of_conn.remove(i)
+        
+start_server()
         
 
 start_server()
