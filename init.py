@@ -15,7 +15,7 @@ def first_run():
     with open('config.ini', 'w') as conf:
         config_object.write(conf)  
     os.system("rm init.py") 
-    os.system("wget -O server.py wget https://raw.githubusercontent.com/JuMpeR6790/vfsc/main/server.py")
+    os.system("wget -O server.py https://raw.githubusercontent.com/JuMpeR6790/vfsc/main/server.py")
     
 
 first_run()
