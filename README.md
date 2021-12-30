@@ -13,7 +13,7 @@ To make a client, please check the documentation and the demo client.
 
 stop : used to stop the server and close all connections
 
-# Client api:
+# Client library:
 
 -connect_to(ip, port) : ip should be a string and port an int, Used to connect to the server
 
