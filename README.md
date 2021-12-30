@@ -14,14 +14,20 @@ stop : used to stop the server and close all connections
 # Client api:
 
 -connect_to(ip, port)  
+
 ->ip should be a string and port an int   
 ->Used to connect to the server
 
+
 -receive_message(message)
+
 ->message should be a string
 ->Used to send a string to the server
 
+
 -listen()
+
 ->Stores the last message sent to the server
+
 
 For more info check the client.py file.
