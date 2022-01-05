@@ -1,7 +1,7 @@
 # VFSC
 VFSC (very fancy socket communicator) is a very simple (but fancy) python api to create simple chat clients (text only). 
 
-# How to use it?
+# How to download the server 
 
 Linux/macOS:
 
@@ -13,12 +13,13 @@ Windows:
 
 If you are on Windows, the init.py won't work, it should soon be working but until it does, you can try doing the setup manually by manually installing in a folder the server.py file, and inside that sazme folder, create a logs.txt and config file.
 
-
-To make a client, please check the documentation and the demo client.
-
 # Server commands:
 
 stop : used to stop the server and close all connections
+
+# How to make a client
+
+To make a client, please check the documentation and the demo client.
 
 # Client library:
 
