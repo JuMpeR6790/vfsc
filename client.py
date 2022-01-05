@@ -1,4 +1,5 @@
 import vfsc
+import threading
 
 def send_message():   
     while True:
