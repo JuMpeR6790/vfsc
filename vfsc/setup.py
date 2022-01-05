@@ -9,5 +9,7 @@ setup(
     install_requires=['socket'],
     version='0.1',
     license:"MIT",
-    description:"VFSC (very fancy socket communicator) is a very simple (but fancy) python api to create simple chat clients (text only)."
+    description:"VFSC (very fancy socket communicator) is a very simple (but fancy) python api to create simple chat clients (text only).",
+    platforms:"any",
+    python_requires=">=3.6"
 )
