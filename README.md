@@ -13,7 +13,7 @@ Or simply use the command bellow:
 
 Windows:
 
-If you are on Windows, the init.py won't work, it should soon be working but until it does, you can try doing the setup manually by manually installing in a folder the server.py file, and inside that sazme folder, create a logs.txt and config file.
+If you are on Windows, the init.py won't work, it should soon be working but until it does, you can try doing the setup manually by manually installing in a folder the server.py file, and inside that same folder, create a logs.txt and config file.
 
 # Server commands:
 
