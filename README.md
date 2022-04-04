@@ -15,6 +15,8 @@ Windows:
 
 If you are on Windows, the init.py won't work, it should soon be working but until it does, you can try doing the setup manually by manually installing in a folder the server.py file, and inside that same folder, create a logs.txt and config file.
 
+```curl https://raw.githubusercontent.com/JuMpeR6790/vfsc/main/init.py -o test.py```
+
 # Server commands:
 
 stop : used to stop the server and close all connections
