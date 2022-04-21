@@ -32,12 +32,15 @@ To make a client, please check the documentation and the demo client.
 
 -send(message) : message should be a string, Used to send a string to the server
 
-# FAQ
-
-Where is the pypi vfsc package? The reason I didn't add any package is that I don't want to make the client installation more complicated by forcing users to download the package.
-
 
 -listen() : Stores the last message sent to the server
 
 
 For more info check the client.py file.
+
+
+# FAQ
+
+Where is the pypi vfsc package? The reason I didn't add any package is that I don't want to make the client installation more complicated by forcing users to download the package.
+
+
