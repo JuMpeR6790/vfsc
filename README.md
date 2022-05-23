@@ -9,7 +9,7 @@ First, if you want to host a VFSC server, simply download the init.py file, plac
 
 Or simply use the command bellow:
 
-```wget -O init.py https://raw.githubusercontent.com/JuMpeR6790/vfsc/main/init.py && python3 init.py```
+```wget -O init.py [https://raw.githubusercontent.com/JuMpeR6790/vfsc/main/init.py && python3 init.py](https://raw.githubusercontent.com/JuMpeR6790/vfsc/rewrite/init.py)```
 
 Windows:
 
