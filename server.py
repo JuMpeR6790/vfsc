@@ -1,3 +1,5 @@
+#importation des differentes librairies 
+
 from os import write
 import socket 
 import threading 
@@ -5,8 +7,10 @@ import sys
 from configparser import ConfigParser
 from datetime import datetime
 
-sys.tracebacklimit = 0  #pour que python ignore une erreur
-config_object = ConfigParser()
+
+#toutes les variables utiles dans le programme
+sys.tracebacklimit = 0  #pour que python ignore l'erreur traceback error  
+config_object = ConfigParser()     #lecture du fichier config.ini
 config_object.read("config.ini")
 info = config_object["Settings"]
 PORT = int(format(info["port"]))
@@ -22,33 +26,34 @@ global number_connection
 number_connections = 0
     
 
-def start_server():
-
-
+def start_server():  #fonction pour commencer le serveur est lancer tous les differents threads
     s.bind((SERVER_IP, PORT))
     print("Server up!")
     print("port:", PORT)
     print("ip:", SERVER_IP)
     print("logs:", LOGS)
-    commandThread = threading.Thread(target=commands)
+    commandThread = threading.Thread(target=commands) #thread pour verifier les commandes
     commandThread.start()
     s.listen(1)
     if DEBUG == "True":
-        debugThread = threading.Thread(target=debugging)
+        debugThread = threading.Thread(target=debugging)  
         debugThread.start()
-    while main_loop:
+    while main_loop:              #boucle principale qui accepte les connections des clients et qui commence un thread pour envoyer et recevoir des messages.
         conn,addr = s.accept()
         clients = threading.Thread(target=connections, args=(conn,addr))
         clients.start()
 
 
+
+
+
         
-def connections(conn,addr):
+def connections(conn,addr):    #fonction qui recoie les messages d'un client, il y en a une par client (1 thread par client)
     list_of_conn.append(conn)
     print("Connected to ", addr)
-    while main_loop:
-        message = conn.recv(1024).decode("utf-8")
-        if message == "":         #PB ICI TROUVER UN MOYEN DE VERIFIER LA DECONNECTION DU CLIENT              
+    while main_loop:  
+        message = conn.recv(1024).decode("utf-8")  
+        if message == "":                 
             print("A client disconnected")
             list_of_conn.remove(conn)
             
@@ -57,15 +62,19 @@ def connections(conn,addr):
         message_with_info = f"{current_time} {message}"
         echo_messages(message_with_info)
         print(message_with_info)
-        if LOGS == "on":
+        if LOGS == "on":  #sauvergarde dans le fichier logs.txt le message 
             log = open("logs.txt", "a")
             log.write("\n")
             log.writelines(message_with_info)
+
+
+
+
        
-def commands():
+def commands(): #verifie la precense de commandes dans le terminale
     while True:
         command = input()
-        if command == "stop":
+        if command == "stop":  #commande pour arretter le serveur
             print("Stopping [...]")
             disconnect()
             main_loop = False
@@ -73,20 +82,20 @@ def commands():
             exit()
 
 
-        elif command == "list":
+        elif command == "list":  #commande pour verifier qui est connecte au serveur
             print(list_of_conn)
         else:
             print("Unknown command")
         
-def echo_messages(message):
+def echo_messages(message):  #envoie a tous les client le dernier message recu.
     for i in list_of_conn:
         i.sendall(bytes(message, encoding="utf-8"))
 
-def debugging():
+def debugging():  
     while True:
         print(list_of_conn)
 
-def disconnect():
+def disconnect():  #arrette le serveur et deconnecte chaque client
     for i in list_of_conn:
         i.shutdown(socket.SHUT_RDWR)
     s.close
