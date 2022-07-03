@@ -26,7 +26,7 @@ global number_connection
 number_connections = 0
     
 
-def start_server():  #fonction to start the server and the different threads
+def start_server():  #function to start the server and the different threads
     s.bind((SERVER_IP, PORT))
     print("Server up!")
     print("port:", PORT)
@@ -48,7 +48,7 @@ def start_server():  #fonction to start the server and the different threads
 
 
         
-def connections(conn,addr):    #fonction/thread receiving cleint messages 
+def connections(conn,addr):    #function/thread receiving cleint messages 
     list_of_conn.append(conn)
     print("Connected to ", addr)
     while main_loop:  
