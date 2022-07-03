@@ -1,4 +1,4 @@
-#importation des differentes librairies 
+#importing the libraries
 
 from os import write
 import socket 
@@ -8,9 +8,9 @@ from configparser import ConfigParser
 from datetime import datetime
 
 
-#toutes les variables utiles dans le programme
-sys.tracebacklimit = 0  #pour que python ignore l'erreur traceback error  
-config_object = ConfigParser()     #lecture du fichier config.ini
+
+sys.tracebacklimit = 0  #to not get a traceback error  
+config_object = ConfigParser()     #reading the config.ini file
 config_object.read("config.ini")
 info = config_object["Settings"]
 PORT = int(format(info["port"]))
@@ -26,19 +26,19 @@ global number_connection
 number_connections = 0
     
 
-def start_server():  #fonction pour commencer le serveur est lancer tous les differents threads
+def start_server():  #fonction to start the server and the different threads
     s.bind((SERVER_IP, PORT))
     print("Server up!")
     print("port:", PORT)
     print("ip:", SERVER_IP)
     print("logs:", LOGS)
-    commandThread = threading.Thread(target=commands) #thread pour verifier les commandes
+    commandThread = threading.Thread(target=commands) #server command thread
     commandThread.start()
     s.listen(1)
     if DEBUG == "True":
         debugThread = threading.Thread(target=debugging)  
         debugThread.start()
-    while main_loop:              #boucle principale qui accepte les connections des clients et qui commence un thread pour envoyer et recevoir des messages.
+    while main_loop:              #main loop used to handle the clients connecting, and starting a new threads for each one of them
         conn,addr = s.accept()
         clients = threading.Thread(target=connections, args=(conn,addr))
         clients.start()
@@ -48,7 +48,7 @@ def start_server():  #fonction pour commencer le serveur est lancer tous les dif
 
 
         
-def connections(conn,addr):    #fonction qui recoie les messages d'un client, il y en a une par client (1 thread par client)
+def connections(conn,addr):    #fonction/thread receiving cleint messages 
     list_of_conn.append(conn)
     print("Connected to ", addr)
     while main_loop:  
@@ -62,7 +62,7 @@ def connections(conn,addr):    #fonction qui recoie les messages d'un client, il
         message_with_info = f"{current_time} {message}"
         echo_messages(message_with_info)
         print(message_with_info)
-        if LOGS == "on":  #sauvergarde dans le fichier logs.txt le message 
+        if LOGS == "on":  #if = on, will save the message to logs.txt
             log = open("logs.txt", "a")
             log.write("\n")
             log.writelines(message_with_info)
@@ -71,10 +71,10 @@ def connections(conn,addr):    #fonction qui recoie les messages d'un client, il
 
 
        
-def commands(): #verifie la precense de commandes dans le terminale
+def commands(): #function used to check for input in the terminal
     while True:
         command = input()
-        if command == "stop":  #commande pour arretter le serveur
+        if command == "stop":  #stopping the server
             print("Stopping [...]")
             disconnect()
             main_loop = False
@@ -82,12 +82,12 @@ def commands(): #verifie la precense de commandes dans le terminale
             exit()
 
 
-        elif command == "list":  #commande pour verifier qui est connecte au serveur
+        elif command == "list":  #used to check who is connected
             print(list_of_conn)
         else:
             print("Unknown command")
         
-def echo_messages(message):  #envoie a tous les client le dernier message recu.
+def echo_messages(message):  #function used to send the last message received by the server to all the connected clients
     for i in list_of_conn:
         i.sendall(bytes(message, encoding="utf-8"))
 
@@ -95,11 +95,15 @@ def debugging():
     while True:
         print(list_of_conn)
 
-def disconnect():  #arrette le serveur et deconnecte chaque client
+def disconnect():  #will stop the socket server and disconnect all the clients connected
     for i in list_of_conn:
         i.shutdown(socket.SHUT_RDWR)
     s.close
 
 start_server()
+
+#The server code needs to be improved, here is the todo list:
+# 1) client disconnection handling 
+# 2) cleaner way to stop the server
 
 
